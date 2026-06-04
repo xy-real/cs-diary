@@ -27,6 +27,8 @@ class PostController extends Controller
             'is_published' => 'boolean',
         ]);
         
+        $validated['user_id'] = $request->user()->id;
+
         $post = Post::create($validated);
 
         return response()->json([
