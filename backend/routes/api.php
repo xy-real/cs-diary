@@ -8,7 +8,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('/posts', [\App\Http\Controllers\PostController::class, 'index']);
-Route::post('/posts', [\App\Http\Controllers\PostController::class, 'store']);
-Route::get('/posts/{id}', [\App\Http\Controllers\PostController::class, 'show']);
-Route::put('/posts/{id}', [\App\Http\Controllers\PostController::class, 'update']);
-Route::delete('/posts/{id}', [\App\Http\Controllers\PostController::class, 'destroy']);
+Route::post('/posts', [\App\Http\Controllers\PostController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/posts/{post}', [\App\Http\Controllers\PostController::class, 'show']);
+Route::put('/posts/{post}', [\App\Http\Controllers\PostController::class, 'update'])->middleware('auth:sanctum');
+Route::delete('/posts/{post}', [\App\Http\Controllers\PostController::class, 'destroy'])->middleware('auth:sanctum');
