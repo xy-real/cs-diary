@@ -9,17 +9,14 @@ class PostController extends Controller
 {
     public function index()
     {
-        $post = Post::all();
-        return response()->json([
-            'data' => $post
-        ]);
+        // Add pagination and eager load the author to prevent N+1 queries
+        $posts = Post::with('author')->latest()->paginate(15);
+        
+        return response()->json($posts);
     }
 
     public function store(Request $request)
     {
-        // Here you would typically handle the incoming request data,
-        // validate it, and save it to the database.
-        // For this example, we'll just return a success message.
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'slug' => 'required|string|unique:posts',
@@ -27,9 +24,8 @@ class PostController extends Controller
             'is_published' => 'boolean',
         ]);
         
-        $validated['user_id'] = $request->user()->id;
-
-        $post = Post::create($validated);
+        // Secure creation via relationship. user_id is assigned automatically.
+        $post = $request->user()->posts()->create($validated);
 
         return response()->json([
             'message' => 'Post created successfully!',
@@ -37,7 +33,9 @@ class PostController extends Controller
         ], 201);
     }
 
-    public function show(Post $post) {
+    public function show(Post $post) 
+    {
+        $post->load('author'); // Load relationship for the single post view
         return response()->json($post);
     }
 
