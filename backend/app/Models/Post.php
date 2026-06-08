@@ -10,8 +10,8 @@ class Post extends Model
 {
     use HasFactory;
 
+    // REMOVED 'user_id' for security. 
     protected $fillable = [
-        'user_id',
         'title',
         'slug',
         'content',
