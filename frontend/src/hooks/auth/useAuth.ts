@@ -22,7 +22,7 @@ export const useAuth = () => {
     const loginMutation = useMutation({
         mutationFn: async (credentials: Record<string, string>) => {
             await csrf(); // MUST execute before posting credentials
-            await axios.post('/login', credentials);
+            await axios.post('/api/login', credentials);
         },
         onSuccess: () => {
             // Force React Query to re-fetch the user immediately
@@ -33,7 +33,7 @@ export const useAuth = () => {
     // 4. Logout Mutation
     const logoutMutation = useMutation({
         mutationFn: async () => {
-            await axios.post('/logout');
+            await axios.post('/api/logout');
         },
         onSuccess: () => {
             // Wipe the user from cache and clear any protected data
