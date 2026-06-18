@@ -92,7 +92,7 @@ export default function HomePage() {
                 )}
 
                 {/* Basic Pagination Controls */}
-                {postsData && postsData.meta.last_page > 1 && (
+                {postsData && (postsData.meta?.last_page > 1) && (
                     <div className="mt-12 flex justify-between items-center pt-8 border-t border-gray-200">
                         <button
                             onClick={() => setPage(p => Math.max(1, p - 1))}
@@ -102,11 +102,11 @@ export default function HomePage() {
                             Previous
                         </button>
                         <span className="text-sm text-gray-500">
-                            Page {page} of {postsData.meta.last_page}
+                            Page {page} of {postsData.meta?.last_page}
                         </span>
                         <button
                             onClick={() => setPage(p => p + 1)}
-                            disabled={page === postsData.meta.last_page}
+                            disabled={page === postsData.meta?.last_page}
                             className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
                         >
                             Next
